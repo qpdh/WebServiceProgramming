@@ -1,6 +1,6 @@
 package dto;
 
-public class CommunityComment implements java.io.Serializable {
+public class CommunityCommentDTO implements java.io.Serializable {
 
 	/**
 	 * 
@@ -18,7 +18,7 @@ public class CommunityComment implements java.io.Serializable {
 	// 댓글이 달린 게시글 아이디
 	private String communityId;
 
-	public CommunityComment() {
+	public CommunityCommentDTO() {
 
 	}
 

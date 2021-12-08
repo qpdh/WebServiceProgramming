@@ -1,6 +1,6 @@
 package dto;
 
-public class Travel implements java.io.Serializable {
+public class TravelDTO implements java.io.Serializable {
 
 	/**
 	 * 
@@ -16,7 +16,7 @@ public class Travel implements java.io.Serializable {
 	// 여행지 정보
 	private String imformation;
 
-	public Travel() {
+	public TravelDTO() {
 
 	}
 

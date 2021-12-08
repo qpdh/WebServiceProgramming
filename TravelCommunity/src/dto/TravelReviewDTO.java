@@ -1,6 +1,6 @@
 package dto;
 
-public class TravelReview implements java.io.Serializable {
+public class TravelReviewDTO implements java.io.Serializable {
 
 	/**
 	 * 
@@ -20,7 +20,7 @@ public class TravelReview implements java.io.Serializable {
 	// 여행지 리뷰 점수
 	private int score;
 
-	public TravelReview() {
+	public TravelReviewDTO() {
 
 	}
 

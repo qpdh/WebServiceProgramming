@@ -1,7 +1,7 @@
 // 커뮤니티 게시글 dto
 package dto;
 
-public class Community implements java.io.Serializable {
+public class CommunityDTO implements java.io.Serializable {
 	/**
 	 * 
 	 */
@@ -24,7 +24,7 @@ public class Community implements java.io.Serializable {
 	// 게시글 좋아요 수
 	private int likes;
 
-	public Community() {
+	public CommunityDTO() {
 		super();
 	}
 
