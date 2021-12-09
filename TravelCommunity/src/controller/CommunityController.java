@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.CommunityDAO;
+import dto.CommunityDTO;
 
+// TODO 컨트롤러 확장시킬 것
 /**
  * Servlet implementation class CommunityController
  */
@@ -43,11 +45,18 @@ public class CommunityController extends HttpServlet {
 		// 커맨드 추출
 		String command = RequestURI.substring(contextPath.length());
 
-		if (command.equals("/CommunityListAction.do")) { // 등록된 글 목록 페이지 출력하기
+		// 등록된 글 목록 페이지 출력하기
+		if (command.equals("/CommunityListAction.do")) {
 			requestBoardList(request);
 			RequestDispatcher rd = request.getRequestDispatcher("./comunity/community.jsp");
 			rd.forward(request, response);
-		} else if (command.equals("/CommunityWriteForm.do")) { // 글 등록 페이지 출력하기
+		}
+		// 글 등록 페이지 출력하기
+		else if (command.equals("/CommunityWriteForm.do")) {
+
+		}
+		// 새로운 글 등록하기
+		else if (command.equals("/CommunityWriteAction.do")) {
 
 		}
 	}
@@ -68,5 +77,28 @@ public class CommunityController extends HttpServlet {
 		CommunityDAO dao = CommunityDAO.getInstance();
 
 		String name = dao.getLoginNameById(id);
+	}
+
+	// 새로운 글 등록하기
+	public void requestCommunityWrite(HttpServletRequest request) {
+		CommunityDAO dao = CommunityDAO.getInstance();
+
+		CommunityDTO community = new CommunityDTO();
+
+		community.setTitle(request.getParameter("title"));
+		community.setFile_name(request.getParameter("picture"));
+		community.setComment(request.getParameter("content"));
+		community.setTag(request.getParameter("tag"));
+
+		community.setUser_id(request.getParameter("user_id"));
+
+		// 날짜 형식 변환
+		// 1999년/12월/12일(11:11:11)
+		java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy/MM/dd(HH:mm:ss)");
+		String registDay = formatter.format(new java.util.Date());
+
+		community.setDate(registDay);
+
+		dao.insertCommunity(community);
 	}
 }
