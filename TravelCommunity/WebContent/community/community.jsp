@@ -115,20 +115,21 @@ $(window).scroll(function(){   //스크롤이 최하단 으로 내려가면 리�
 			CommunityDTO notice = communityList.get(j);
 		%>
 		<div class="card">
-			<h2><%=notice.getUser_id()%></h2>
-			<h2><%=notice.getTitle()%></h2>
-			<h2><%=notice.getComment()%></h2>
-			<h2><%=notice.getTag()%></h2>
-			<h2><%=notice.getDate()%></h2>
-			<h2>
+			<p>작성자 : <%=notice.getUser_id()%></p>
+			<p>제목 : <%=notice.getTitle()%></p>
+			<p>내용 : <%=notice.getComment()%></p>
+			<p>태그 : <%=notice.getTag()%></p>
+			<p>작성일 : <%=notice.getDate()%></p>
+			<p>
 				좋아요 수
-				<%=notice.getLikes()%></h2>
-			<h2><%=notice.getUser_id()%></h2>
+				<%=notice.getLikes()%></p>
 			<hr>
 		</div>
 		<%
 		}
 		%>
+		
+		
 		<h1>길이 늘리기</h1>
 		<h1>길이 늘리기</h1>
 		<h1>길이 늘리기</h1>

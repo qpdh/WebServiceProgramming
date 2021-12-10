@@ -6,7 +6,7 @@
 	position: fixed;
 	left: 50%;
 	bottom: 180px;
-	margin-left: -615px;
+	margin-left: -815px;
 	text-align: center;
 	width: 70px;
 	border-radius: 8px;
@@ -20,7 +20,7 @@
 	position: fixed;
 	right: 50%;
 	bottom: 180px;
-	margin-right: -615px;
+	margin-right: -815px;
 	text-align: center;
 	width: 70px;
 	border-radius: 8px;
@@ -59,14 +59,16 @@
 }
 
 .container {
-	width: 600px;
-	height: 200px;
+	width: 60%;
+	overflow: hidden;
+	height: auto;
 	margin: 0 auto;
 }
 
 .card {
-	width: 600px;
-	height: 200px;
-	margin: 0 auto;
-	border: 1px solid #f2f2f2;
+	width: auto;
+	overflow: hidden;
+	height: auto;
+	margin: 5px;
+	border: 3px solid #ff0000;
 }

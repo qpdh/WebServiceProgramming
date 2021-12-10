@@ -73,7 +73,7 @@ public class CommunityController extends HttpServlet {
 		else if (command.equals("/CommunityWriteAction.community")) {
 			System.out.println("This is ComminityWriteAction.community");
 			requestCommunityWrite(request);
-			RequestDispatcher rd = request.getRequestDispatcher("./community.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/community/CommunityListAction.community");
 			rd.forward(request, response);
 		}
 	}
