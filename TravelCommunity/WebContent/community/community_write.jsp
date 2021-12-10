@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%
+String user_id = (String) request.getAttribute("user_id");
+%>
 <html>
 <head>
 <link rel="stylesheet" href="./../resources/css/bootstrap.min.css" />
@@ -40,8 +43,12 @@
 		<h3>글쓰기</h3>
 		<hr>
 
-		<form name="newWrite" action="./CommunityWriteAction.do"
-			class="form-horizontal" method="post" onsubmit="return checkForm()">
+		<form name="newWrite" action="./CommunityWriteAction.community"
+			class="form-horizontal" method="post" enctype="multipart/form-data"
+			onsubmit="return checkForm()">
+
+			<input name="user_id" type="hidden" class="form-control"
+				value=<%=user_id%>>
 
 			<div class="form-group row">
 				<label class="col-sm-2 control-label"><h4>제목</h4></label>
@@ -56,7 +63,7 @@
 			<div class="form-group row">
 				<label class="col-sm-3 control-label"><h4>사진첨부</h4></label>
 				<div class="col-sm-5">
-					<input name="picture" type="file">
+					<input name="picture" type="file" accept="image/*">
 				</div>
 			</div>
 
