@@ -53,18 +53,12 @@ public class MainController extends HttpServlet {
 
 		// 여행지 페이지로 이동
 		if (command.equals("/Travel.main")) {
-			// requestCommunityList(request);
-			RequestDispatcher rd = request.getRequestDispatcher("./travel.jsp");
-			rd.forward(request, response);
+			response.sendRedirect("/travel/travel.jsp");
 		}
 
 		// 커뮤니티 페이지로 이동
 		else if (command.equals("/Community.main")) {
-			// requestLoginName(request);
 			response.sendRedirect("/community/CommunityListAction.community");
-//			RequestDispatcher requestDispatcher = request
-//					.getRequestDispatcher("/community/CommunityListAction.community");
-//			requestDispatcher.forward(request, response);
 		}
 
 		// 로그인 페이지로 이동

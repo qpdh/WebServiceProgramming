@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import dto.CommunityCommentDTO;
 import dto.CommunityDTO;
 import module.DBConnection;
 
@@ -22,7 +23,7 @@ public class CommunityDAO {
 	}
 
 	// community 테이블 레코드 갯수
-	public int getListCount(String items, String text) {
+	public int getListCount(String text) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -31,10 +32,10 @@ public class CommunityDAO {
 
 		String sql;
 
-		if (items == null && text == null) {
+		if (text == null) {
 			sql = "select count(*) from community";
 		} else {
-			sql = "select count(*) from community where " + items + " like '%" + text + "%'";
+			sql = "select count(*) from community where tag like '%" + text + "%'";
 		}
 
 		try {
@@ -67,12 +68,12 @@ public class CommunityDAO {
 	}
 
 	// community 테이블 레코드 가져오기
-	public ArrayList<CommunityDTO> getCommunityList(int page, int limit, String items, String text) {
+	public ArrayList<CommunityDTO> getCommunityList(int page, int limit, String text) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
-		int total_record = getListCount(items, text);
+		int total_record = getListCount(text);
 		int start = (page - 1) * limit;
 		int index = (start + 1);
 		System.out.println("total_record : " + total_record);
@@ -81,10 +82,11 @@ public class CommunityDAO {
 
 		String sql;
 
-		if (items == null && text == null) {
+		System.out.println("입력한 태그 : " + text);
+		if (text == null) {
 			sql = "select * from community order by id desc";
 		} else {
-			sql = "select * from community where " + items + " like '%" + text + "%' order by id desc";
+			sql = "select * from community where tag like '%" + text + "%' order by id desc";
 		}
 
 		ArrayList<CommunityDTO> list = new ArrayList<CommunityDTO>();
@@ -106,6 +108,10 @@ public class CommunityDAO {
 				community.setDate(rs.getString("date"));
 				community.setLikes(rs.getInt("likes"));
 				community.setTag(rs.getString("tag"));
+
+				ArrayList<CommunityCommentDTO> comments = getCommunityCommentsList(rs.getInt("id"));
+				community.setComments(comments);
+
 				list.add(community);
 
 				if (index < (start + limit) && index <= total_record) {
@@ -234,6 +240,83 @@ public class CommunityDAO {
 			pstmt.executeUpdate();
 		} catch (Exception ex) {
 			System.out.println("updateLikes() 에러 : " + ex);
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception ex) {
+				throw new RuntimeException(ex.getMessage());
+			}
+		}
+	}
+
+	// 댓글 리스트 가져오기
+	public ArrayList<CommunityCommentDTO> getCommunityCommentsList(int id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		String sql = "select * from community_comment where community_id = ?";
+
+		ArrayList<CommunityCommentDTO> list = new ArrayList<CommunityCommentDTO>();
+
+		try {
+			conn = DBConnection.getConnection();
+			pstmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			pstmt.setInt(1, id);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				System.out.println("처리완료");
+				CommunityCommentDTO comment = new CommunityCommentDTO();
+				comment.setId(rs.getInt("id"));
+				comment.setUser_id(rs.getString("user_id"));
+				comment.setComment(rs.getString("comment"));
+				comment.setDate(rs.getString("date"));
+				comment.setCommunityId(rs.getString("community_id"));
+				list.add(comment);
+			}
+
+		} catch (Exception ex) {
+			System.out.println("getCommunityCommentsList() 에러 : " + ex);
+		}
+		try {
+			if (rs != null)
+				rs.close();
+			if (pstmt != null)
+				pstmt.close();
+			if (conn != null)
+				conn.close();
+		} catch (Exception ex) {
+			throw new RuntimeException(ex.getMessage());
+		}
+
+		return list;
+	}
+
+	// 댓글 테이블에 새로운 글 삽입하기
+	public void insertCommunityComment(CommunityCommentDTO comment) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = DBConnection.getConnection();
+
+			String sql = "insert into community_comment(date,user_id,comment,community_id) values(?,?,?,?)";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, comment.getDate());
+			pstmt.setString(2, comment.getUser_id());
+			pstmt.setString(3, comment.getComment());
+			pstmt.setString(4, comment.getCommunityId());
+
+			pstmt.executeUpdate();
+
+		} catch (Exception ex) {
+			System.out.println("insertCommunityComment() 에러 : " + ex);
 		} finally {
 			try {
 				if (pstmt != null)

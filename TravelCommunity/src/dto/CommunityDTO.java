@@ -1,12 +1,14 @@
 // 커뮤니티 게시글 dto
 package dto;
 
+import java.util.ArrayList;
+
 public class CommunityDTO implements java.io.Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	// 게시글 번호
 	private int id;
 	// 게시글 등록 날짜
@@ -24,8 +26,18 @@ public class CommunityDTO implements java.io.Serializable {
 	// 게시글 좋아요 수
 	private int likes;
 
+	private ArrayList<CommunityCommentDTO> comments = new ArrayList<>();
+
 	public CommunityDTO() {
 		super();
+	}
+
+	public ArrayList<CommunityCommentDTO> getComments() {
+		return comments;
+	}
+	
+	public void setComments(ArrayList<CommunityCommentDTO> comments) {
+		this.comments = comments;
 	}
 
 	public int getId() {

@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE HTML>
+<%
+String user_id = (String) session.getAttribute("user_id");
+System.out.println("Main2 session user_id = " + user_id);
+%>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -238,17 +242,30 @@ body {
 
 
 <body>
-
 	<center>
 		<div class='menu'>
 			<ul>
 				<br>
-				<li><a href='index.html'>여행지</a></li>
 
-				<li><a href='./main/Community.main'>커뮤니티</a>
-				<li><img src="images/user2.png" alt="" /><a href='intro.html'></a>
-				</li>
-				</li>
+				<%
+				if (user_id == null || user_id == "") {
+				%>
+				<li><a href='index.html'>로그인</a></li>
+
+				<li><a href='intro.html'>회원가입</a></li>
+
+				<%
+				} else {
+				%>
+
+				<li><a href='./main/Travel.main'>여행지</a></li>
+
+				<li><a href='./main/Community.main'>커뮤니티</a></li>
+
+				<li><img src="images/user2.png" alt="" /><a href='intro.html'></a></li>
+				<%
+				}
+				%>
 			</ul>
 		</div>
 	</center>

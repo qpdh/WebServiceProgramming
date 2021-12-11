@@ -253,7 +253,7 @@ body {
 
 	<section class="banner half">
 		<article>
-			<img src="images/travel1.jpg" alt="" />
+			<img src="/images/travel1.jpg" alt="" />
 			<div class="inner">
 				<header>
 					<p>여행 어디가</p>
@@ -262,7 +262,7 @@ body {
 			</div>
 		</article>
 		<article>
-			<img src="images/travel2.jpg" alt="" />
+			<img src="/images/travel2.jpg" alt="" />
 			<div class="inner">
 				<header>
 					<p>여행 어디가</p>
@@ -271,7 +271,7 @@ body {
 			</div>
 		</article>
 		<article>
-			<img src="images/travel3.jpg" alt="" />
+			<img src="/images/travel3.jpg" alt="" />
 			<div class="inner">
 				<header>
 					<p>여행 어디가</p>

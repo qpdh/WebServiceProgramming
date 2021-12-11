@@ -102,6 +102,7 @@ p {
 .item_active {
 	text-align: center;
 }
+
 .jumbotron {
 	padding-top: 3rem;
 	padding-bottom: 3rem;
@@ -170,26 +171,26 @@ p {
 				<div class="row">
 
 					<%
-						request.setCharacterEncoding("utf-8");
-						Statement stmt = null;
-						PreparedStatement pstmt = null;
-						String location = null;
-						String image_name1 = null;
-						String image_name2 = null;
-						String image_name3 = null;
-						String info = null;
-						String photo1 = null;
-						ResultSet rs = null;
+					request.setCharacterEncoding("utf-8");
+					Statement stmt = null;
+					PreparedStatement pstmt = null;
+					String location = null;
+					String image_name1 = null;
+					String image_name2 = null;
+					String image_name3 = null;
+					String info = null;
+					String photo1 = null;
+					ResultSet rs = null;
 
-						try {
-							String SQL = "select id, locate, information, photo1 from travel";
-							pstmt = conn.prepareStatement(SQL);
-							rs = pstmt.executeQuery();
-							while (rs.next()) {
-								int id = rs.getInt(1);
-								location = rs.getString(2);
-								info = rs.getString(3).toString().substring(0, 30);
-								photo1 = rs.getString(4);
+					try {
+						String SQL = "select id, locate, information, photo1 from travel";
+						pstmt = conn.prepareStatement(SQL);
+						rs = pstmt.executeQuery();
+						while (rs.next()) {
+							int id = rs.getInt(1);
+							location = rs.getString(2);
+							info = rs.getString(3).toString().substring(0, 30);
+							photo1 = rs.getString(4);
 					%>
 					<div class="col-md-4">
 						<div class="card mb-4 shadow-sm">
@@ -198,7 +199,7 @@ p {
 									class="bd-placeholder-img card-img-top" width="100%"
 									height="225" preserveAspectRatio="xMidYMid slice"
 									focusable="false" role="img">
-				
+
 							</div>
 							<div class="card-body">
 								<p class="card-text">
@@ -218,16 +219,16 @@ p {
 					</div>
 
 					<%
-						}
-						} catch (SQLException ex) {
-							out.println(ex.getMessage());
-							out.println("실패");
-						} finally {
-							if (pstmt != null)
-								pstmt.close();
-							if (conn != null)
-								conn.close();
-						}
+					}
+					} catch (SQLException ex) {
+					out.println(ex.getMessage());
+					out.println("실패");
+					} finally {
+					if (pstmt != null)
+					pstmt.close();
+					if (conn != null)
+					conn.close();
+					}
 					%>
 
 				</div>

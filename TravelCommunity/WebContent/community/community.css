@@ -6,7 +6,7 @@
 	position: fixed;
 	left: 50%;
 	bottom: 180px;
-	margin-left: -815px;
+	margin-left: 30%;
 	text-align: center;
 	width: 70px;
 	border-radius: 8px;
@@ -20,7 +20,7 @@
 	position: fixed;
 	right: 50%;
 	bottom: 180px;
-	margin-right: -815px;
+	margin-right: 30%;
 	text-align: center;
 	width: 70px;
 	border-radius: 8px;
@@ -52,6 +52,17 @@
 	outline: none;
 	padding-left: 10px;
 	font-size: 20px;
+}
+
+.btn_submit{
+ background-image: url('/resources/images/search.png');
+    background-position:  0px 0px;
+    background-repeat: no-repeat;
+    width: auto;
+    height: auto;
+    border: 0px;
+ cursor:pointer;
+ outline: 0;
 }
 
 .search-img {

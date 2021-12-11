@@ -19,6 +19,7 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import dao.CommunityDAO;
+import dto.CommunityCommentDTO;
 import dto.CommunityDTO;
 
 // TODO 컨트롤러 확장시킬 것
@@ -46,6 +47,7 @@ public class CommunityController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
 		// TODO Auto-generated method stub
 		String RequestURI = request.getRequestURI();
 		String contextPath = request.getContextPath() + "/community";
@@ -76,6 +78,13 @@ public class CommunityController extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("/community/CommunityListAction.community");
 			rd.forward(request, response);
 		}
+
+		// 댓글 등록 버튼 누름
+		else if (command.equals("/CommunityCommentWriteAction.community")) {
+			requestCommunityCommentWrite(request);
+			RequestDispatcher rd = request.getRequestDispatcher("/community/CommunityListAction.community");
+			rd.forward(request, response);
+		}
 	}
 
 	// 등록된 글 목록 가져오기
@@ -94,13 +103,12 @@ public class CommunityController extends HttpServlet {
 			pageNum = Integer.parseInt(request.getParameter("pageNum"));
 		}
 
-		String items = request.getParameter("items");
-		String text = request.getParameter("text");
+		String text = request.getParameter("input_tag");
 
 		// community 테이블 레코드 갯수 가져오기
-		int total_record = dao.getListCount(items, text);
+		int total_record = dao.getListCount(text);
 		//
-		communityList = dao.getCommunityList(pageNum, limit, items, text);
+		communityList = dao.getCommunityList(pageNum, limit, text);
 
 		int total_page;
 
@@ -181,7 +189,52 @@ public class CommunityController extends HttpServlet {
 			e.printStackTrace();
 			return;
 		}
+	}
 
+	// 댓글 등록하기
+	// 새로운 글 등록하기
+	public void requestCommunityCommentWrite(HttpServletRequest request) throws UnsupportedEncodingException {
+		try {
+			request.setCharacterEncoding("utf-8");
+
+			Enumeration<String> em = request.getParameterNames();
+//			
+			while (em.hasMoreElements()) {
+				String name = em.nextElement();
+				System.out.println(name + " : " + request.getParameter(name));
+			}
+
+			System.out.println("title : " + request.getParameter("title"));
+
+			CommunityDAO dao = CommunityDAO.getInstance();
+
+			CommunityCommentDTO comment = new CommunityCommentDTO();
+
+			comment.setComment(request.getParameter("content"));
+
+			comment.setUser_id(request.getParameter("user_id"));
+
+			comment.setCommunityId(request.getParameter("community_id"));
+
+			// 날짜 형식 변환
+			// 1999/12/12(11:11:11)
+			java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd(HH:mm:ss)");
+			Date date = new Date();
+
+			comment.setDate(formatter.format(date));
+
+			System.out.println("변환한 시간: :" + comment.getDate());
+
+			// 데이터 로컬 폴더에 추가
+			// 5메가 제한
+
+			dao.insertCommunityComment(comment);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return;
+		}
 		// 데이터 삽입
 
 	}
