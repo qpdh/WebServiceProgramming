@@ -73,10 +73,8 @@ $(window).scroll(function(){   //스크롤이 최하단 으로 내려가면 리�
 <body>
 
 
-	<%--
-	TODO 헤더 추가되면 주석 제거할 것
-	<%@page import="header.jsp"%>
-	--%>
+	<jsp:include page="/assets/jsp/header.jsp" />
+
 
 	<%--Left Floating View --%>
 	<div class="left-floating">
@@ -115,11 +113,21 @@ $(window).scroll(function(){   //스크롤이 최하단 으로 내려가면 리�
 			CommunityDTO notice = communityList.get(j);
 		%>
 		<div class="card">
-			<p>작성자 : <%=notice.getUser_id()%></p>
-			<p>제목 : <%=notice.getTitle()%></p>
-			<p>내용 : <%=notice.getComment()%></p>
-			<p>태그 : <%=notice.getTag()%></p>
-			<p>작성일 : <%=notice.getDate()%></p>
+			<p>
+				작성자 :
+				<%=notice.getUser_id()%></p>
+			<p>
+				제목 :
+				<%=notice.getTitle()%></p>
+			<p>
+				내용 :
+				<%=notice.getComment()%></p>
+			<p>
+				태그 :
+				<%=notice.getTag()%></p>
+			<p>
+				작성일 :
+				<%=notice.getDate()%></p>
 			<p>
 				좋아요 수
 				<%=notice.getLikes()%></p>
@@ -128,8 +136,8 @@ $(window).scroll(function(){   //스크롤이 최하단 으로 내려가면 리�
 		<%
 		}
 		%>
-		
-		
+
+
 		<h1>길이 늘리기</h1>
 		<h1>길이 늘리기</h1>
 		<h1>길이 늘리기</h1>
@@ -184,8 +192,5 @@ $(window).scroll(function(){   //스크롤이 최하단 으로 내려가면 리�
 		<h1>길이 늘리기</h1>
 		<h1>길이 늘리기</h1>
 	</div>
-
-
-
-</body>
+	<jsp:include page="/assets/jsp/footer.jsp" /></body>
 </html>

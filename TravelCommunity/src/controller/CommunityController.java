@@ -53,7 +53,7 @@ public class CommunityController extends HttpServlet {
 		// 커맨드 추출
 		String command = RequestURI.substring(contextPath.length());
 
-		System.out.println("command : " + command);
+		System.out.println("CommunityController-command : " + command);
 
 		// 등록된 글 목록 페이지 출력하기
 		if (command.equals("/CommunityListAction.community")) {

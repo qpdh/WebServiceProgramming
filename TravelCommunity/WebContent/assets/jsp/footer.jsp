@@ -1,9 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE HTML>
-<html>
-<head>
-<meta charset="UTF-8">
 <style>
 body {
 	font-family: "Lucida Sans Typewriter", "Lucida Console", Monaco,
@@ -229,83 +225,19 @@ body {
 	transform: rotateY(180deg);
 }
 </style>
-
-<title>여행 어디가</title>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="stylesheet" href="assets/css/main.css" />
-</head>
-
-
-<body>
-
-	<center>
-		<div class='menu'>
-			<ul>
-				<br>
-				<li><a href='index.html'>로그인</a></li>
-
-				<li><a href='intro.html'>회원가입</a></li>
-			</ul>
-		</div>
-
-	</center>
-
-	<section class="banner half">
-		<article>
-			<img src="images/travel1.jpg" alt="" />
-			<div class="inner">
-				<header>
-					<p>여행 어디가</p>
-					<h2>Travel</h2>
-				</header>
-			</div>
-		</article>
-		<article>
-			<img src="images/travel2.jpg" alt="" />
-			<div class="inner">
-				<header>
-					<p>여행 어디가</p>
-					<h2>Travel</h2>
-				</header>
-			</div>
-		</article>
-		<article>
-			<img src="images/travel3.jpg" alt="" />
-			<div class="inner">
-				<header>
-					<p>여행 어디가</p>
-					<h2>Travel</h2>
-				</header>
-			</div>
-		</article>
-	</section>
-
-
-	<!-- Footer -->
-	<footer id="footer">
-		<div class="container">
-			<ul class="icons">
-				<li><a href="http://twitter.com/intent/tweet?text="
-					class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-				<li><a href="http://www.facebook.com/sharer/sharer.php?u="
-					class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-				<li><a href="#" class="icon fa-instagram"><span
-						class="label">Instagram</span></a></li>
-				<li><a href="#" class="icon fa-envelope-o"><span
-						class="label">Email</span></a></li>
-			</ul>
-		</div>
-		<div class="copyright">&copy;Copyright 2021 KPU Web Programming.
-			All rights reserved.</div>
-	</footer>
-
-	<!-- Scripts -->
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="assets/js/jquery.scrollex.min.js"></script>
-	<script src="assets/js/skel.min.js"></script>
-	<script src="assets/js/util.js"></script>
-	<script src="assets/js/main.js"></script>
-
-</body>
-</html>
+<footer id="footer">
+	<div class="container">
+		<ul class="icons">
+			<li><a href="http://twitter.com/intent/tweet?text="
+				class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+			<li><a href="http://www.facebook.com/sharer/sharer.php?u="
+				class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+			<li><a href="#" class="icon fa-instagram"><span
+					class="label">Instagram</span></a></li>
+			<li><a href="#" class="icon fa-envelope-o"><span
+					class="label">Email</span></a></li>
+		</ul>
+	</div>
+	<div class="copyright">&copy;Copyright 2021 KPU Web Programming.
+		All rights reserved.</div>
+</footer>
