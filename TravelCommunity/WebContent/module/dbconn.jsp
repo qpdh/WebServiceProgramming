@@ -17,6 +17,14 @@ if(conn){
 	conn.close();
 }
 
+PreparedStatement 등으로 SQL 처리를 완료 후
+다음은 필수로 적어주자
+if(pstmt){
+	pstmt.close();
+}
+if(conn){
+	conn.close();
+}
 
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -37,4 +45,6 @@ try {
 	out.println("데이터베이스 연결이 실패했습니다.<br>");
 	out.println("SQLException: " + ex.getMessage());
 }
+
 %>
+
