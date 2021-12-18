@@ -11,6 +11,7 @@ import module.DBConnection;
 
 public class CommunityDAO {
 	private static CommunityDAO instance;
+	private ArrayList<CommunityDTO> listOfProducts = new ArrayList<CommunityDTO>();
 
 	private CommunityDAO() {
 
@@ -82,14 +83,15 @@ public class CommunityDAO {
 
 		String sql;
 
-		System.out.println("입력한 태그 : " + text);
+		System.out.println("입력한 검색어 : " + text);
 		if (text == null) {
 			sql = "select * from community order by id desc";
 		} else {
 			sql = "select * from community where tag like '%" + text + "%' order by id desc";
 		}
 
-		ArrayList<CommunityDTO> list = new ArrayList<CommunityDTO>();
+		listOfProducts.clear();
+		listOfProducts = new ArrayList<CommunityDTO>();
 
 		try {
 			conn = DBConnection.getConnection();
@@ -109,10 +111,11 @@ public class CommunityDAO {
 				community.setLikes(rs.getInt("likes"));
 				community.setTag(rs.getString("tag"));
 
-				ArrayList<CommunityCommentDTO> comments = getCommunityCommentsList(rs.getInt("id"));
-				community.setComments(comments);
+				// ArrayList<CommunityCommentDTO> comments =
+				// getCommunityCommentsList(rs.getInt("id"));
+				// community.setComments(comments);
 
-				list.add(community);
+				listOfProducts.add(community);
 
 				if (index < (start + limit) && index <= total_record) {
 					index++;
@@ -136,7 +139,7 @@ public class CommunityDAO {
 			throw new RuntimeException(ex.getMessage());
 		}
 
-		return list;
+		return listOfProducts;
 	}
 
 	// users 테이블에서 인증된 id의 사용자명 가져오기
@@ -214,7 +217,7 @@ public class CommunityDAO {
 	}
 
 	// 선택된 글의 좋아요 증가하기
-	public void upadteLikes(int id) {
+	public void upadteLikes(int communityId, String userId) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -222,20 +225,48 @@ public class CommunityDAO {
 		try {
 			conn = DBConnection.getConnection();
 
-			String sql = "select likes from community where id = ?";
+			String sql = "select * from likes_check where community_id = ? and user_id = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, id);
-			rs = pstmt.executeQuery();
-			int likes = 0;
 
+			pstmt.setInt(1, communityId);
+			pstmt.setString(2, userId);
+
+			rs = pstmt.executeQuery();
+
+			// 이미 좋아요를 한 경우
+			if (rs.next()) {
+				return;
+			}
+
+			pstmt.close();
+
+			sql = "insert into likes_check values(?,?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, communityId);
+			pstmt.setString(2, userId);
+
+			pstmt.execute();
+
+			pstmt.close();
+
+			sql = "select likes from community where id=?";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, communityId);
+
+			rs = pstmt.executeQuery();
+
+			int likes = 0;
 			if (rs.next())
 				likes = rs.getInt("likes") + 1;
+
+			pstmt.close();
 
 			sql = "update community set likes=? where id =?";
 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, likes);
-			pstmt.setInt(2, id);
+			pstmt.setInt(2, communityId);
 
 			pstmt.executeUpdate();
 		} catch (Exception ex) {
@@ -258,7 +289,7 @@ public class CommunityDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
-		String sql = "select * from community_comment where community_id = ?";
+		String sql = "select * from community_comment where community_id = ? order by id desc";
 
 		ArrayList<CommunityCommentDTO> list = new ArrayList<CommunityCommentDTO>();
 
@@ -328,6 +359,110 @@ public class CommunityDAO {
 			}
 		}
 	}
+
+	// 댓글 테이블에 새로운 글 삭제
+	public void deleteCommunityComment(int commentId) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = DBConnection.getConnection();
+
+			String sql = "delete from community_comment where id=?";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, commentId);
+
+			pstmt.executeUpdate();
+
+		} catch (Exception ex) {
+			System.out.println("deleteCommunityComment() 에러 : " + ex);
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception ex) {
+				throw new RuntimeException(ex.getMessage());
+			}
+		}
+	}
+
 	// TODO 수정
 	// TODO 삭제
+	// 댓글 테이블에 새로운 글 삭제
+	public void deleteCommunity(int communityId) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = DBConnection.getConnection();
+
+			String sql = "delete from community where id=?";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, communityId);
+
+			pstmt.executeUpdate();
+
+		} catch (Exception ex) {
+			System.out.println("deleteCommunity() 에러 : " + ex);
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception ex) {
+				throw new RuntimeException(ex.getMessage());
+			}
+		}
+	}
+
+	// 특정 페이지
+	public CommunityDTO getCommunityByNum(int num, int page) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		CommunityDTO community = null;
+
+		// updateHit(num);
+		String sql = "select * from community where id = ? ";
+
+		try {
+			conn = DBConnection.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				community = new CommunityDTO();
+				community.setId(rs.getInt("id"));
+				community.setUser_id(rs.getString("user_id"));
+				community.setFile_name(rs.getString("file_name"));
+				community.setTitle(rs.getString("title"));
+				community.setComment(rs.getString("comment"));
+				community.setDate(rs.getString("date"));
+				community.setLikes(rs.getInt("likes"));
+				community.setTag(rs.getString("tag"));
+			}
+
+			return community;
+		} catch (Exception ex) {
+			System.out.println("getCommunityByNum() 오류 : " + ex);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception ex) {
+				throw new RuntimeException(ex.getMessage());
+			}
+		}
+		return null;
+	}
 }

@@ -1,0 +1,61 @@
+@charset "UTF-8";
+h3{
+	font-size: 24px;
+    text-align: center;
+}
+.title_top{
+	text-align: center;
+    font-size: 50px;
+    width: 1200px;    
+    margin: auto;
+	}
+	
+.center_img{
+	width: 340px;
+    margin: auto;
+}
+
+#div_img{
+	text-align: center;
+	width: 274px;
+    margin: 14px;
+    display: inline-table;
+}	
+    input, textarea {
+    resize: none;
+    outline: none;
+}
+
+#star{
+	width: 100px;
+}
+#sub1 {
+	padding: 10px;
+    font-size: 17px;
+    float:right;
+    width: 80px;
+	border: 1px solid #ccc;
+	background-color: white;
+	border-radius: 0px;
+	box-shadow: 1px 1px 3px #585858;
+	font-family: 'Cafe24Oneprettynight';
+	font-weight: 600;
+}
+#lb{
+	margin: 0 15px;
+}
+#form1{
+	border: 1px solid #ddd;
+    padding: 15px 9px;
+}
+#info{
+	font-family:'Cafe24Oneprettynight';
+	font-weight:600;
+	padding: 10px;
+    line-height: 2;
+    margin: 20px;
+    border: 1px solid #ddd;
+}
+#reviewForm th, td{
+	padding: 9px;
+}

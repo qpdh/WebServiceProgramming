@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="dao.TravelDAO"%>
+<%@page import="dto.TravelDTO"%>
+<%@page import="dto.TravelReviewDTO"%>
+<%@page import="dao.TravelReviewDAO"%>
+<%@page import="java.util.ArrayList"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <%@ include file="/module/dbconn.jsp"%>
@@ -19,82 +24,56 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="/assets/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
 <!-- 로그인 상태에서 아이디 세션값 받아오기  -->
 <!-- 아직 로그인 합치기 전이라 임의로 값 지정 -->
 <%
-String id = "jiyoon";
-/* String id = null;
-if(session.getAttribute("id") != null){
-	id = (String) session.getAttribute("id");
-} */
+String id = null;
+if (session.getAttribute("user_id") != null) {
+	id = (String) session.getAttribute("user_id");
+
+}
+int num = Integer.parseInt(request.getParameter("index"));
+String placename = request.getParameter("placename");
+TravelDAO ddao = new TravelDAO();
+
+ArrayList<TravelDTO> list = ddao.travel_detail(num);
 %>
 <title>여행지 상세보기</title>
+<%@include file="/assets/jsp/header.jsp"%>
 </head>
 <body>
-	<%
-	request.setCharacterEncoding("utf-8");
-	int num = Integer.parseInt(request.getParameter("index"));
-	Statement stmt = null;
-	PreparedStatement pstmt = null;
-	String location = null;
-	String image_name1 = null;
-	String image_name2 = null;
-	String image_name3 = null;
-	String info = null;
-	ResultSet rs = null;
+	<br>
+	<br>
+	<br>
 
-	try {
-		String SQL = "select * from travel where id = ?";
-		pstmt = conn.prepareStatement(SQL);
-		pstmt.setInt(1, num);
-		rs = pstmt.executeQuery();
-		while (rs.next()) {
-			location = rs.getString(2);
-			image_name1 = rs.getString(3);
-			image_name2 = rs.getString(4);
-			image_name3 = rs.getString(5);
-			info = rs.getString(6);
-	%>
 	<div class="title_box"></div>
 	<hr>
-	<div class="title_top"><%=location%></div>
+	<div class="title_top"><%=list.get(0).getLocate()%></div>
 	<hr>
 	<div class="container p-3 my-3 border">
 		<h3>여행지 정보</h3>
 
 		<div>
 			<div style="text-align: center;" id="div_img">
-				<img src="../images/<%=image_name1%>" class="center_img"><br>
+				<img src="../images/<%=list.get(0).getPhoto1()%>" class="center_img"><br>
 			</div>
 			<div style="text-align: center;" id="div_img">
-				<img src="../images/<%=image_name2%>" class="center_img"><br>
+				<img src="../images/<%=list.get(0).getPhoto2()%>" class="center_img"><br>
 			</div>
 			<div style="text-align: center;" id="div_img">
-				<img src="../images/<%=image_name3%>" class="center_img"><br>
+				<img src="../images/<%=list.get(0).getPhoto3()%>" class="center_img"><br>
 			</div>
 		</div>
 
 		<p id="info">
-			<%=info%>
+			<%=list.get(0).getInformation()%>
 			<br> <br>
 		</p>
 	</div>
-	<%
-	}
-	} catch (SQLException ex) {
-	out.println(ex.getMessage());
-	out.println("실패");
-	} finally {
-	if (pstmt != null)
-	pstmt.close();
-	if (conn != null)
-	conn.close();
-	}
-	%>
 	<!-- 여행 상세보기 끝  -->
 
 	<!--리뷰작성 시작 -->
@@ -104,8 +83,9 @@ if(session.getAttribute("id") != null){
 
 		<div id="form1">
 			<!-- action 속성에 게시 누르면 DB연결되는 jsp 작성할 예정 -->
-			<form action="#" method="post">
-				<input type="hidden" name="placeName" value="<%=location%>">
+			<form action="review_Process.jsp?index=<%=num%>" method="post">
+				<input type="hidden" name="placeName"
+					value="<%=list.get(0).getLocate()%>">
 				<table id="reviewForm">
 					<tr style="height: 40px;">
 						<th style="width: 50px">별점</th>
@@ -144,21 +124,38 @@ if(session.getAttribute("id") != null){
 				<th>작성일</th>
 				<th>별점</th>
 			</tr>
+
 			<%
 			// 리뷰 항목 DB연결 할 부분
+			%>
+			<%
+			TravelReviewDAO reviewDAO = new TravelReviewDAO();
+
+			ArrayList<TravelReviewDTO> reviewList = reviewDAO.getReviewList(num);
+
+			if (reviewList.size() == 0) {
 			%>
 			<tr>
 				<td colspan="5" align="center">등록된 게시글이 없습니다.</td>
 			</tr>
+			<%
+			}
 
+			for (int i = 0; i < reviewList.size(); i++) {
+			%>
 			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
+				<td><%=i + 1%></td>
+				<td><%=reviewList.get(i).getUserId()%></td>
+				<td><%=reviewList.get(i).getComment()%></td>
+				<td><%=reviewList.get(i).getDate()%></td>
+				<td><img id="star"
+					src="../images/<%=reviewList.get(i).getScore()%>"></td>
 			</tr>
+			<%
+			}
+			%>
 		</table>
 	</div>
 </body>
+<%@include file="/assets/jsp/footer.jsp"%>
 </html>

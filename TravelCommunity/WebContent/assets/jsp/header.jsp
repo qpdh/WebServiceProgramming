@@ -1,12 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<%
+String user_id = (String) session.getAttribute("user_id");
+%>
 <style>
 body {
-	font-family: "Lucida Sans Typewriter", "Lucida Console", Monaco,
-		"Bitstream Vera Sans Mono", monospace;
 	margin: 0px;
-	padding: 50px;
-	background: #e1e1e1;
 }
 
 .menu {
@@ -123,7 +126,7 @@ body {
 }
 
 .menu ul ul ul {
-	top: 37px;
+	top: 50x;
 	padding-left: 5px;
 }
 
@@ -225,16 +228,44 @@ body {
 	transform: rotateY(180deg);
 }
 </style>
-<center>
-	<div class='menu'>
-		<ul>
-			<br>
-			<li><a href='index.html'>여행지</a></li>
+</head>
 
-			<li><a href='/main/Community.main'>커뮤니티</a>
-			<li><img src="images/user2.png" alt="" /><a href='intro.html'></a>
-			</li>
-			</li>
-		</ul>
-	</div>
-</center>
+<body>
+	<center>
+		<div class='menu'>
+			<ul>
+				<br>
+				<br>
+				<br>
+
+				<%
+				if (user_id == null || user_id == "") {
+				%>
+				<li><a href='login.jsp'>로그인</a></li>
+
+				<li><a href='join.jsp'>회원가입</a></li>
+
+				<%
+				} else {
+				%>
+
+				<li><a href='./main/Travel.main'>여행지</a></li>
+
+				<li><a href='./main/Community.main'>커뮤니티</a></li>
+
+				<li><img src="/images/user2.png" alt="" /><a href='Mypage.jsp'></a></li>
+				<%
+				}
+				%>
+			</ul>
+		</div>
+	</center>
+	
+	<header id='header'>
+		<title>여행 어디가</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</header>
+</body>
+</html>

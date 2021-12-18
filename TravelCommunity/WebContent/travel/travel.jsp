@@ -4,53 +4,43 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>여행</title>
+<%@include file="/assets/jsp/header.jsp"%>
+<link rel="stylesheet" href="/assets/css/area.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
-<title>Insert title here</title>
 </head>
 <body>
-	<h1>hello</h1>
+	<br>
+	<br>
+	<br>
 
-	<title>여행</title>
-	<link rel="stylesheet" href="../css/area.css">
-	<link rel="stylesheet"
-		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-</head>
-<body>
-	<div class="area_center">
-		<div class="wrap">
-			<div class="title" align="center">
-				<h1>국내 주요도시</h1>
-			</div>
-			<div class="travel_box">
-				<div class="travel_center">
-					<div class="travel_select01 ">
-						<a href="/travel/seoul.jsp" class="travel_city">서울</a> <a
-							href="/travel/busan.jsp" class="travel_city">부산</a> <a
-							href="/travel/jeju.jsp" class="travel_city">제주</a>
-					</div>
-				</div>
-			</div>
-		</div>
+	<div class=main_title>
+		<h1 align="center">국내 주요 도시</h1>
+		<h3 align="center">이미지를 클릭해주세요</h3>
 	</div>
-	<h1 align="center">Best 주요 도시</h1>
 	<div class="container" align="center">
 		<div class="row">
 
 			<div class="col-md-4">
-				<br> <img src="../images/gyeongbokgung1.jpg" alt="1"
-					class="img-thumbnail" width="300px" height="300px">
+				<br> <a href=" ./seoul.jsp "><img
+					src="../images/gyeongbokgung1.jpg" alt="1" class="img-thumbnail"
+					width="300px" height="300px"></a>
 				<h3>서울</h3>
 
 			</div>
 			<div class="col-md-4">
-				<br> <img src="../images/Hallasan Mountain.jpg" alt="2"
-					class="img-thumbnail" width="300px" height="300px">
+				<br> <a href=" ./jeju.jsp "><img
+					src="../images/Hallasan Mountain.jpg" alt="2" class="img-thumbnail"
+					width="300px" height="300px"></a>
 				<h3>제주</h3>
 
 			</div>
 			<div class="col-md-4">
-				<br> <img src="../images/Haeundae Beach.jpg" alt="3"
-					class="img-thumbnail" width="300px" height="300px">
+				<br> <a href=" ./busan.jsp "><img
+					src="../images/Haeundae Beach.jpg" alt="3" class="img-thumbnail"
+					width="300px" height="300px"></a>
 				<h3>부산</h3>
 			</div>
 		</div>
@@ -59,4 +49,5 @@
 	</div>
 
 </body>
+<%@include file="/assets/jsp/footer.jsp"%>
 </html>

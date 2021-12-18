@@ -60,7 +60,7 @@ public class CommunityController extends HttpServlet {
 		// 등록된 글 목록 페이지 출력하기
 		if (command.equals("/CommunityListAction.community")) {
 			requestCommunityList(request);
-			RequestDispatcher rd = request.getRequestDispatcher("./community.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("./community_list.jsp");
 			rd.forward(request, response);
 		}
 
@@ -82,9 +82,67 @@ public class CommunityController extends HttpServlet {
 		// 댓글 등록 버튼 누름
 		else if (command.equals("/CommunityCommentWriteAction.community")) {
 			requestCommunityCommentWrite(request);
+			RequestDispatcher rd = request.getRequestDispatcher("/community/CommunityViewAction.community");
+			rd.forward(request, response);
+		}
+
+		// 상세보기
+		else if (command.equals("/CommunityViewAction.community")) {
+			requestCommunityView(request);
+			RequestDispatcher rd = request.getRequestDispatcher("/community/community_view.jsp");
+			rd.forward(request, response);
+		}
+		// 수정
+		else if (command.equals("/CommunityUpdateAction.community")) {
+			// requestBoardUpdate(request);
+			// RequestDispatcher rd = request.getRequestDispatcher("/BoardListAction.do");
+			// rd.forward(request, response);
+		}
+		// 게시글 삭제
+		else if (command.equals("/CommunityDeleteAction.community")) {
+			requestCommunityDelete(request);
 			RequestDispatcher rd = request.getRequestDispatcher("/community/CommunityListAction.community");
 			rd.forward(request, response);
 		}
+		// 댓글 삭제
+		else if (command.equals("/CommunityCommentDeleteAction.community")) {
+			requestCommunityCommentDelete(request);
+			RequestDispatcher rd = request.getRequestDispatcher("/community/CommunityViewAction.community");
+			rd.forward(request, response);
+		}
+		// 좋아요
+		else if (command.equals("/CommunityLikeAction.community")) {
+			requestCommunityLike(request);
+			RequestDispatcher rd = request.getRequestDispatcher("/community/CommunityViewAction.community");
+			rd.forward(request, response);
+		}
+	}
+
+	public void requestCommunityLike(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		CommunityDAO dao = CommunityDAO.getInstance();
+		int communityId = Integer.parseInt(request.getParameter("num"));
+		String userId = request.getParameter("user_id");
+		dao.upadteLikes(communityId, userId);
+	}
+
+	// 게시글 삭제
+	public void requestCommunityDelete(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		CommunityDAO dao = CommunityDAO.getInstance();
+
+		int communityId = Integer.parseInt(request.getParameter("num"));
+		dao.deleteCommunity(communityId);
+	}
+
+	// 댓글 삭제
+	public void requestCommunityCommentDelete(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		CommunityDAO dao = CommunityDAO.getInstance();
+
+		int commentId = Integer.parseInt(request.getParameter("communiyId"));
+		dao.deleteCommunityComment(commentId);
+
 	}
 
 	// 등록된 글 목록 가져오기
@@ -103,6 +161,7 @@ public class CommunityController extends HttpServlet {
 			pageNum = Integer.parseInt(request.getParameter("pageNum"));
 		}
 
+		System.out.println("requestCommunityList: PageNum : " + pageNum);
 		String text = request.getParameter("input_tag");
 
 		// community 테이블 레코드 갯수 가져오기
@@ -237,5 +296,24 @@ public class CommunityController extends HttpServlet {
 		}
 		// 데이터 삽입
 
+	}
+
+	// 페이지 상세보기
+	public void requestCommunityView(HttpServletRequest request) {
+
+		CommunityDAO dao = CommunityDAO.getInstance();
+		int num = Integer.parseInt(request.getParameter("num"));
+		int pageNum = Integer.parseInt(request.getParameter("pageNum"));
+
+		CommunityDTO community = new CommunityDTO();
+
+		community = dao.getCommunityByNum(num, pageNum);
+
+		CommunityDAO communityDAO = CommunityDAO.getInstance();
+		community.setComments(communityDAO.getCommunityCommentsList(community.getId()));
+
+		request.setAttribute("num", num);
+		request.setAttribute("page", pageNum);
+		request.setAttribute("community", community);
 	}
 }

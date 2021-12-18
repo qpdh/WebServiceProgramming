@@ -1,0 +1,29 @@
+@CHARSET "UTF-8";
+
+.travel_city {
+	display: block;
+	width: 30%;
+	float: left;
+	height: 70px;
+	font-size: 30px;
+	color: #555555;
+	line-height: 55px;
+	text-align: center;
+}
+
+.travel_box {
+	width: 100%;
+	padding: 10px 200px 10px 200px;
+}
+
+.travel_center {
+	padding: 10px 300px 110px 360px;
+}
+
+.row {
+	padding: 50px;
+}
+
+.main_title {
+	padding: 50px;
+}

@@ -18,7 +18,7 @@ public class TravelReviewDTO implements java.io.Serializable {
 	// 여행지 리뷰 내용
 	private String comment;
 	// 여행지 리뷰 점수
-	private int score;
+	private String score;
 
 	public TravelReviewDTO() {
 
@@ -64,11 +64,11 @@ public class TravelReviewDTO implements java.io.Serializable {
 		this.comment = comment;
 	}
 
-	public int getScore() {
+	public String getScore() {
 		return score;
 	}
 
-	public void setScore(int score) {
+	public void setScore(String score) {
 		this.score = score;
 	}
 

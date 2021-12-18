@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="dao.TravelDAO"%>
+<%@page import="dto.TravelDTO"%>
+<%@page import="java.util.ArrayList"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -16,7 +19,7 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="/assets/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
@@ -126,6 +129,7 @@ p {
 	max-width: 40rem;
 }
 </style>
+<%@include file="/assets/jsp/header.jsp"%>
 </head>
 
 <body>
@@ -171,31 +175,15 @@ p {
 				<div class="row">
 
 					<%
-					request.setCharacterEncoding("utf-8");
-					Statement stmt = null;
-					PreparedStatement pstmt = null;
-					String location = null;
-					String image_name1 = null;
-					String image_name2 = null;
-					String image_name3 = null;
-					String info = null;
-					String photo1 = null;
-					ResultSet rs = null;
-
-					try {
-						String SQL = "select id, locate, information, photo1 from travel";
-						pstmt = conn.prepareStatement(SQL);
-						rs = pstmt.executeQuery();
-						while (rs.next()) {
-							int id = rs.getInt(1);
-							location = rs.getString(2);
-							info = rs.getString(3).toString().substring(0, 30);
-							photo1 = rs.getString(4);
+					String placename = "seoul";
+					TravelDAO ddao = new TravelDAO();
+					ArrayList<TravelDTO> list = ddao.travel(placename);
+					for (int i = 0; i < list.size(); i++) {
 					%>
 					<div class="col-md-4">
 						<div class="card mb-4 shadow-sm">
 							<div class="item_active">
-								<img src="../images/<%=photo1%>"
+								<img src="../images/<%=list.get(i).getPhoto1()%>"
 									class="bd-placeholder-img card-img-top" width="100%"
 									height="225" preserveAspectRatio="xMidYMid slice"
 									focusable="false" role="img">
@@ -203,13 +191,14 @@ p {
 							</div>
 							<div class="card-body">
 								<p class="card-text">
-									#<%=location%></p>
-								<p class="card-text2"><%=info%>....
+									#<%=list.get(i).getLocate()%></p>
+								<p class="card-text2"><%=list.get(i).getInformation().toString().substring(0, 30)%>....
 								</p>
 
 								<div class="d-flex justify-content-between align-items-center">
 									<div class="btn-group">
-										<a href="./travel_detail.jsp?index=<%=id%>"
+										<a
+											href="./travel_detail.jsp?index=<%=list.get(i).getId()%>&?placename=<%=placename%>"
 											class="btn btn-sm btn-outline-secondary" id="bt">보기</a>
 									</div>
 									<small class="text-muted"></small>
@@ -220,19 +209,11 @@ p {
 
 					<%
 					}
-					} catch (SQLException ex) {
-					out.println(ex.getMessage());
-					out.println("실패");
-					} finally {
-					if (pstmt != null)
-					pstmt.close();
-					if (conn != null)
-					conn.close();
-					}
 					%>
 
 				</div>
 			</div>
 		</div>
 </body>
+<%@include file="/assets/jsp/footer.jsp"%>
 </html>
