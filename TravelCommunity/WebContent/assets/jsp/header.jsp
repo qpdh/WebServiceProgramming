@@ -7,6 +7,10 @@
 <%
 String user_id = (String) session.getAttribute("user_id");
 %>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<title>여행 어디가</title>
 <style>
 body {
 	margin: 0px;
@@ -231,41 +235,36 @@ body {
 </head>
 
 <body>
-	<center>
-		<div class='menu'>
-			<ul>
-				<br>
-				<br>
-				<br>
-
-				<%
-				if (user_id == null || user_id == "") {
-				%>
-				<li><a href='login.jsp'>로그인</a></li>
-
-				<li><a href='join.jsp'>회원가입</a></li>
-
-				<%
-				} else {
-				%>
-
-				<li><a href='./main/Travel.main'>여행지</a></li>
-
-				<li><a href='./main/Community.main'>커뮤니티</a></li>
-
-				<li><img src="/images/user2.png" alt="" /><a href='Mypage.jsp'></a></li>
-				<%
-				}
-				%>
-			</ul>
-		</div>
-	</center>
-	
 	<header id='header'>
-		<title>여행 어디가</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" href="assets/css/main.css" />
+		<center>
+
+			<div class='menu'>
+				<ul>
+					<li><a href='/main.jsp'>여행 어디가</a></li>
+					<%
+					if (user_id == null || user_id == "") {
+					%>
+					<li><a href='/login.jsp'>로그인</a></li>
+
+					<li><a href='/join.jsp'>회원가입</a></li>
+
+					<%
+					} else {
+					%>
+
+					<li><a href='/travel/travel.jsp'>여행지</a></li>
+
+					<li><a href='/community/CommunityListAction.community'>커뮤니티</a></li>
+
+					<li><img src="/images/user2.png" alt="" /><a
+						href='/Mypage.jsp'></a></li>
+					<%
+					}
+					%>
+				</ul>
+			</div>
+		</center>
 	</header>
+
 </body>
 </html>

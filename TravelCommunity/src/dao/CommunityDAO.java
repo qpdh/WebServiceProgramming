@@ -391,20 +391,28 @@ public class CommunityDAO {
 
 	// TODO 수정
 	// TODO 삭제
-	// 댓글 테이블에 새로운 글 삭제
+	// 커뮤니티 테이블 글 삭제
 	public void deleteCommunity(int communityId) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
 			conn = DBConnection.getConnection();
 
-			String sql = "delete from community where id=?";
-
+			String sql = "SET foreign_key_checks = 0";
 			pstmt = conn.prepareStatement(sql);
+			pstmt.execute();
+			pstmt.close();
 
+			sql = "delete from community where id=?;";
+			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, communityId);
-
 			pstmt.executeUpdate();
+			pstmt.close();
+
+			sql = "SET foreign_key_checks = 1;";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.execute();
+			pstmt.close();
 
 		} catch (Exception ex) {
 			System.out.println("deleteCommunity() 에러 : " + ex);
@@ -464,5 +472,36 @@ public class CommunityDAO {
 			}
 		}
 		return null;
+	}
+
+	// mypage
+	public ArrayList<CommunityDTO> getmypage(String id) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		String sql = "select * from community where user_id = ? limit 3";
+		ArrayList<CommunityDTO> list = new ArrayList<CommunityDTO>();
+		try {
+			conn = DBConnection.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				CommunityDTO communityDTO = new CommunityDTO();
+				communityDTO.setId(rs.getInt(1));
+				communityDTO.setDate(rs.getString(2));
+				communityDTO.setFile_name(rs.getString(3));
+				communityDTO.setUser_id(rs.getString(4));
+				communityDTO.setTag(rs.getString(5));
+				communityDTO.setTitle(rs.getString(6));
+				communityDTO.setComment(rs.getString(7));
+				communityDTO.setLikes(rs.getInt(8));
+				list.add(communityDTO);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 }

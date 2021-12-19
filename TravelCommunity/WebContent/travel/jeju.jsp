@@ -133,7 +133,9 @@ p {
 </head>
 
 <body>
-
+	<br>
+	<br>
+	<br>
 	<div class="top">
 		<h1 style="font-size: 50px; font-weight: 600">제주</h1>
 	</div>
@@ -212,6 +214,7 @@ p {
 				</div>
 			</div>
 		</div>
+	</div>
 </body>
 <%@include file="/assets/jsp/footer.jsp"%>
 </html>

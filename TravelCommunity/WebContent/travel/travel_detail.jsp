@@ -11,7 +11,7 @@
 
 <!-- 부트스트랩 코드들은 header.jsp와 합치게 되면 header.jsp부분에 추가할 예정 -->
 
-<link rel="stylesheet" href="../css/placeDetail.css">
+<link rel="stylesheet" href="/css/placeDetail.css">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!--검색창 css 소스-->
@@ -30,6 +30,7 @@
 
 <!-- 로그인 상태에서 아이디 세션값 받아오기  -->
 <!-- 아직 로그인 합치기 전이라 임의로 값 지정 -->
+<%@include file="/assets/jsp/header.jsp"%>
 <%
 String id = null;
 if (session.getAttribute("user_id") != null) {
@@ -43,7 +44,7 @@ TravelDAO ddao = new TravelDAO();
 ArrayList<TravelDTO> list = ddao.travel_detail(num);
 %>
 <title>여행지 상세보기</title>
-<%@include file="/assets/jsp/header.jsp"%>
+
 </head>
 <body>
 	<br>

@@ -4,7 +4,7 @@ create database if not exists travel_community;
 use travel_community;
 
 # 기존에 테이블이 있으면 다 날리기
-
+drop table if exists likes_check;
 drop table if exists community_comment;
 drop table if exists community;
 

@@ -303,7 +303,10 @@ public class CommunityController extends HttpServlet {
 
 		CommunityDAO dao = CommunityDAO.getInstance();
 		int num = Integer.parseInt(request.getParameter("num"));
-		int pageNum = Integer.parseInt(request.getParameter("pageNum"));
+		int pageNum = 1;
+		if (request.getParameter("pageNum") != null) {
+			pageNum = Integer.parseInt(request.getParameter("pageNum"));
+		}
 
 		CommunityDTO community = new CommunityDTO();
 

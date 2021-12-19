@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-String user_id = (String) request.getAttribute("user_id");
+String userId = (String) request.getAttribute("user_id");
 %>
 <html>
 <head>
@@ -35,7 +35,7 @@ String user_id = (String) request.getAttribute("user_id");
 		}
 	}
 </script>
-
+<%@include file="/assets/jsp/header.jsp"%>
 <body>
 
 	<div class="container">
@@ -98,4 +98,5 @@ String user_id = (String) request.getAttribute("user_id");
 		</form>
 	</div>
 </body>
+<%@include file="/assets/jsp/footer.jsp"%>
 </html>

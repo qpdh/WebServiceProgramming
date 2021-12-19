@@ -44,7 +44,7 @@ public class MainController extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String RequestURI = request.getRequestURI();
-		String contextPath = request.getContextPath() + "/main";
+		String contextPath = request.getContextPath();
 
 		// 커맨드 추출
 		String command = RequestURI.substring(contextPath.length());

@@ -35,30 +35,24 @@ function clickLikes() {
 	location.href = "./CommunityLikeAction.community?user_id=<%=user_id%>&num=<%=num%>&pageNum=<%=pageNum%>"
 }
 </script>
-
+<jsp:include page="/assets/jsp/header.jsp" />
 <body>
-	<jsp:include page="/assets/jsp/header.jsp" />
+	<br>
+	<br>
+	<br>
 	<div class="jumbotron">
 		<div class="container">
-			<h1 class="display-3">게시판</h1>
+			<h1 class="display-3"><%=notice.getTitle()%></h1>
 		</div>
 	</div>
 
 	<div class="container">
 
 		<div class="form-group row">
-			<label class="col-sm-2 control-label">성명</label>
+			<label class="col-sm-2 control-label">작성자</label>
 			<div class="col-sm-3">
 				<input name="name" class="form-control"
 					value=" <%=notice.getUser_id()%>" readonly>
-			</div>
-		</div>
-
-		<div class="form-group row">
-			<label class="col-sm-2 control-label">제목</label>
-			<div class="col-sm-5">
-				<input name="subject" class="form-control"
-					value=" <%=notice.getTitle()%>" readonly>
 			</div>
 		</div>
 
@@ -134,8 +128,7 @@ function clickLikes() {
 				<p>
 					<a
 						href="/community/CommunityDeleteAction.community?num=<%=notice.getId()%>&pageNum=<%=pageNum%>"
-						class="btn btn-danger"> 삭제</a> <input type="submit"
-						class="btn btn-success" value="수정 ">
+						class="btn btn-danger"> 삭제</a>
 			</c:if>
 			<a href="./CommunityListAction.community?pageNum=<%=pageNum%>"
 				class="btn btn-primary"> 목록</a>

@@ -24,7 +24,6 @@ System.out.println("community.jsp의 pageNum : " + pageNum);
 
 <link rel="stylesheet" href="/assets/css/bootstrap-theme.min.css" />
 <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
-<link rel="stylesheet" href="/assets/css/jumbotron-narrow.css">
 <link rel="stylesheet" href="./community.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -81,8 +80,11 @@ function search(){
 	<br>
 	<br>
 	<br>
+	<br>
+	<br>
 	<div class="container">
-		<form action="<c:url value="./BoardListAction.do"/>" method="post">
+		<form action="<c:url value="./CommunityListAction.community"/>"
+			method="post">
 			<div>
 				<div class="text-right">
 					<span class="badge badge-success">전체 <%=total_record%>건
@@ -135,9 +137,9 @@ function search(){
 			<div align="left">
 				<table>
 					<tr>
-						<td width="100%" align="left">&nbsp;&nbsp;<input name="text"
-							type="text" placeholder="태그를 입력하세요" /> <input type="submit"
-							id="btnAdd" class="btn btn-primary " value="검색 " />
+						<td width="100%" align="left">&nbsp;&nbsp;<input
+							name="input_tag" type="text" placeholder="태그를 입력하세요" /> <input
+							type="submit" id="btnAdd" class="btn btn-primary " value="검색 " />
 						</td>
 						<td width="100%" align="right"><a href="#"
 							onclick="writeCommunity(); return false;" class="btn btn-primary">&laquo;글쓰기</a>
@@ -148,8 +150,6 @@ function search(){
 		</form>
 		<hr>
 	</div>
-
-
 </body>
 <jsp:include page="/assets/jsp/footer.jsp" />
 </html>

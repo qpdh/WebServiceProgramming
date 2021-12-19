@@ -35,6 +35,7 @@ request.setCharacterEncoding("UTF-8");
 			script.println("</script>");
 		} else {
 			PrintWriter script = response.getWriter();
+			session.setAttribute("user_id", id);
 			script.println("<script>");
 			script.println("alert('회원가입 성공')");
 			script.println("location.href='main.jsp'");
